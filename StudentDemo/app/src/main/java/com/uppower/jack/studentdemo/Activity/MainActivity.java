@@ -24,6 +24,7 @@ import com.uppower.jack.studentdemo.R;
 import com.uppower.jack.studentdemo.Utils.NewinfoFromAPI;
 import com.uppower.jack.studentdemo.adapter.DrawerLIstAdapter;
 import com.uppower.jack.studentdemo.adapter.MainDrawerListAdapter;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private MainDrawerListAdapter mAdapter;
 
     private String[] mPlanetTitles={"0", "1" ,"2"};
+
+    private PullToRefreshView mPullToRefreshView;
 
     Handler handler =new Handler(){
         @Override
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        //-----------------------------------------------
+        //------------------------------------------------------------------------------------------
 
 
         mAdapter = new MainDrawerListAdapter(getApplicationContext() ,mDatas);
@@ -135,11 +138,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });//设置Item的点击事件
 
-        //-------------------------------------------------------
+         //-----------------------------------------------------------------------------------------
+
+
         //设置初始化Rycylerview中的数据
         initDatas();
 
+        //设置加载动画的监听事件
+        mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPullToRefreshView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPullToRefreshView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
+
+
     }
+
+
 
 
     //配置Drawerlayout中的ListView的监听器
@@ -180,6 +201,10 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.Toolbar);
         mToolbar.setTitle("UpPwer");
+
+        mPullToRefreshView = (PullToRefreshView) findViewById(R.id.PullToRefreshView);
+
+
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView_drawerlayout);
     }
