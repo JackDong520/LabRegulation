@@ -2,6 +2,7 @@ package com.uppower.jack.studentdemo.UI.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +47,7 @@ public class LoginActivity extends Activity {
                 userLogin.GetInfoFromService();
             }
         });
+
 
         handler = new Handler(){
             @Override
